@@ -55,9 +55,9 @@ namespace StarterAssets
 		public float ProjectileSpeed;
 		public void Shoot()
 		{
-			GameObject pro = Instantiate(Projectile, SpawnPoint.position, transform.rotation);
-			pro.GetComponent<Rigidbody>().AddForce(new Vector3(
-				0,0, ProjectileSpeed));
+			GameObject pro = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
+			pro.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(
+				0,0, ProjectileSpeed), ForceMode.Impulse);
 			Destroy(pro, 5f);
 		}
 
