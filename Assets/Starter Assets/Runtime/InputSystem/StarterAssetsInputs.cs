@@ -25,6 +25,10 @@ namespace StarterAssets
 		{
 			MoveInput(value.Get<Vector2>());
 		}
+		public void OnShoot(InputValue value)
+		{
+			Shoot();
+		}
 
 		public void OnLook(InputValue value)
 		{
@@ -45,6 +49,17 @@ namespace StarterAssets
 		}
 #endif
 
+		[Header("Shooting Settings")]
+		[SerializeField] private GameObject Projectile;
+		[SerializeField] private Transform SpawnPoint;
+		public float ProjectileSpeed;
+		public void Shoot()
+		{
+			GameObject pro = Instantiate(Projectile, SpawnPoint.position, transform.rotation);
+			pro.GetComponent<Rigidbody>().AddForce(new Vector3(
+				0,0, ProjectileSpeed));
+			Destroy(pro, 5f);
+		}
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
