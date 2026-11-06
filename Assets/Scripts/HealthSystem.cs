@@ -14,6 +14,8 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI GameOver;
     [SerializeField] private Victory Victory;
     private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
+    [SerializeField] private Animator Animator;
+    public bool Dead = false;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
@@ -31,14 +33,16 @@ public class HealthSystem : MonoBehaviour
     {
         Health -= amount;
 
-        if (Health <= 0) {
+        if (Health <= 0 && !Dead) {
+            Dead = true;
             if (Player) {
                 GameOver.SetText("Game Over");
                 Time.timeScale = 0f;
                 StarterAssetsInputs.Locked = true;
             } else
             {
-                Destroy(gameObject);
+                Animator.SetBool("Dead", true);
+                Destroy(gameObject, 5f);
                 Victory.UpdateCounter();
             }
         }
