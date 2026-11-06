@@ -32,6 +32,7 @@ public class HealthSystem : MonoBehaviour
 
         if (Health <= 0) {
             GameOver.SetText("Game Over");
+            RestartButton.SetActive(true);
             Time.timeScale = 0f;
         }
     }

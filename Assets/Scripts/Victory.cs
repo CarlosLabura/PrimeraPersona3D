@@ -17,8 +17,8 @@ public class Victory : MonoBehaviour
 
         if (EnemiesLeft <= 0)
         {
-            Time.timeScale = 0f;
             GameOver.SetText("Victory!");
+            Time.timeScale = 0f;
         }
     }
 }
