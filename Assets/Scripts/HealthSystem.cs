@@ -12,7 +12,8 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private Image HealthBar;
     [SerializeField] private Image DamageBar;
     [SerializeField] private TextMeshProUGUI GameOver;
-    [SerializeField] private GameObject RestartButton;
+    [SerializeField] private Victory Victory;
+    private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
@@ -31,14 +32,21 @@ public class HealthSystem : MonoBehaviour
         Health -= amount;
 
         if (Health <= 0) {
-            GameOver.SetText("Game Over");
-            RestartButton.SetActive(true);
-            Time.timeScale = 0f;
+            if (Player) {
+                GameOver.SetText("Game Over");
+                Time.timeScale = 0f;
+                StarterAssetsInputs.Locked = true;
+            } else
+            {
+                Destroy(gameObject);
+                Victory.UpdateCounter();
+            }
         }
     }
     void Start()
     {
         Health = MaxHealth;
+        StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
     }
     void Update()
     {
