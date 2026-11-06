@@ -4,6 +4,7 @@ using UnityEngine;
 public class Victory : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Counter;
+    [SerializeField] private TextMeshProUGUI GameOver;
     public int EnemiesLeft = 0;
     void Start()
     {
@@ -14,9 +15,10 @@ public class Victory : MonoBehaviour
     {
         Counter.SetText("0/"+EnemiesLeft);
 
-        if (EnemiesLeft > 0)
-            return;
-
-        
+        if (EnemiesLeft <= 0)
+        {
+            Time.timeScale = 0f;
+            GameOver.SetText("Victory!");
+        }
     }
 }
