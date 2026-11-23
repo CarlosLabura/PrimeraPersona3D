@@ -145,7 +145,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!195 &7483380663807316866
 NavMeshAgent:
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea632441661039146a21d50458f3451d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  Target: {fileID: 0}
-  Animator: {fileID: 4093439998667950783}
+  Target: {fileID: 3061381076439982687, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
+  ModelAnimator: {fileID: 4093439998667950783}
 --- !u!114 &6033668733805081416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,14 +195,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f0354a8d93a2842a88b87624c74507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  IsPlayer: 0
   MaxHealth: 100
-  Health: 0
-  Player: 0
+  EnemyDestroyTime: 3
+  EnemyDamage: 10
   HealthBar: {fileID: 772135076977439937}
   DamageBar: {fileID: 1779670293703661085}
-  GameOver: {fileID: 0}
-  Victory: {fileID: 0}
-  Animator: {fileID: 4093439998667950783}
+  VictoryScript: {fileID: 402853678643823194, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
+  GameOverText: {fileID: 0}
+  EnemyHealthCanvas: {fileID: 3801261649282003447}
+  EnemyModelAnimator: {fileID: 4093439998667950783}
+  Health: 0
+  Dead: 0
 --- !u!1 &1218181316162512352
 GameObject:
   m_ObjectHideFlags: 0

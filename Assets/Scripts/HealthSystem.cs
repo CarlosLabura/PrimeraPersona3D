@@ -1,60 +1,79 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class HealthSystem : MonoBehaviour
 {
+    // Inspector Variables
+    [Header("Health Configs")]
+    public bool IsPlayer = false;
     public int MaxHealth = 100;
-    public int Health = 0;
-    public bool Player = false;
+    [Space(2)]
+    public float EnemyDestroyTime = 3f;
+    public int EnemyDamage = 10;
+
+    [Header("Objects Needed")]
     [SerializeField] private Image HealthBar;
     [SerializeField] private Image DamageBar;
-    [SerializeField] private TextMeshProUGUI GameOver;
-    [SerializeField] private Victory Victory;
-    private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
-    [SerializeField] private Animator Animator;
-    public bool Dead = false;
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Projectile"))
-            Damage(collision.gameObject.GetComponent<Projectile>().Damage);
+    [SerializeField] private Victory VictoryScript;
+    [Space(2)]
+    [SerializeField] private TextMeshProUGUI GameOverText;
+    [Space(2)]
+    [SerializeField] private Transform EnemyHealthCanvas;
+    [SerializeField] private Animator EnemyModelAnimator;
 
-        if (Player && collision.gameObject.CompareTag("Enemy"))
-            Damage(10);
-    }
-    public void Restart()
+    [Header("Script Data")]
+    [ReadOnly] public int Health = 0;
+    [ReadOnly]  public bool Dead = false;
+
+    // Needed Components 
+    private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
+    private void Awake()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
     }
+    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0041.md
+    private static readonly int IsDead = Animator.StringToHash("Dead");
     public void Damage(int amount)
     {
         Health -= amount;
 
         if (Health <= 0 && !Dead) {
             Dead = true;
-            if (Player) {
-                GameOver.SetText("Game Over");
-                Time.timeScale = 0f;
+            if (IsPlayer) {
+                GameOverText.SetText("Game Over");
                 StarterAssetsInputs.Locked = true;
+                Time.timeScale = 0f;
             } else
             {
-                Animator.SetBool("Dead", true);
-                Destroy(gameObject, 5f);
-                Victory.UpdateCounter();
+                EnemyModelAnimator.SetBool(IsDead, true);
+                VictoryScript.UpdateCounter();
+                Destroy(gameObject, EnemyDestroyTime);
             }
         }
     }
-    void Start()
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private void Start()
     {
         Health = MaxHealth;
-        StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
     }
-    void Update()
+    private void Update()
     {
         DamageBar.fillAmount = Mathf.Lerp(DamageBar.fillAmount, (float) Health/MaxHealth, Time.deltaTime);
         HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, (float) Health/MaxHealth, Time.deltaTime*5);
+        if (!IsPlayer)
+            EnemyHealthCanvas.rotation = Camera.main.transform.rotation;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+            Damage(collision.gameObject.GetComponent<Projectile>().Damage);
+
+        if (IsPlayer && collision.gameObject.CompareTag("Enemy"))
+            Damage(EnemyDamage);
     }
 }
