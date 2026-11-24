@@ -24,6 +24,7 @@ public class HealthSystem : MonoBehaviour
     // Internal Variables
     public Action OnEnemyDeath;
     public Action OnPlayerDeath;
+    public static Action OnAnyEnemyDeath;
     //https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/ide1005
 
     // Needed Components 
@@ -45,6 +46,7 @@ public class HealthSystem : MonoBehaviour
             } else
             {
                 OnEnemyDeath?.Invoke();
+                OnAnyEnemyDeath?.Invoke();
                 Destroy(gameObject, EnemyDestroyTime);
             }
         }

@@ -52,12 +52,17 @@ public class VictoryCondition : MonoBehaviour
     }
     private void Start()
     {
-        HealthSystem.OnEnemyDeath += EnemyDeath;
+        HealthSystem.OnAnyEnemyDeath += EnemyDeath; // this only runs with player health logic, so u must use the static method
         HealthSystem.OnPlayerDeath += PlayerDeath;
 
         MaxEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         EnemiesLeft = MaxEnemies;
 
         Counter.SetText(EnemiesLeft+"/"+MaxEnemies);
+    }
+    private void OnDestroy()
+    {
+        HealthSystem.OnAnyEnemyDeath -= EnemyDeath;
+        HealthSystem.OnPlayerDeath -= PlayerDeath;
     }
 }

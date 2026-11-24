@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea632441661039146a21d50458f3451d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  Target: {fileID: 3061381076439982687, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
+  Target: {fileID: 0}
   ModelAnimator: {fileID: 4093439998667950783}
 --- !u!114 &6033668733805081416
 MonoBehaviour:
@@ -197,16 +197,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   IsPlayer: 0
   MaxHealth: 100
-  EnemyDestroyTime: 3
   EnemyDamage: 10
+  ProjectileDamage: 20
+  EnemyDestroyTime: 3
   HealthBar: {fileID: 772135076977439937}
   DamageBar: {fileID: 1779670293703661085}
-  VictoryScript: {fileID: 402853678643823194, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
-  GameOverText: {fileID: 0}
   EnemyHealthCanvas: {fileID: 3801261649282003447}
-  EnemyModelAnimator: {fileID: 4093439998667950783}
   Health: 0
-  Dead: 0
+  IsDead: 0
 --- !u!1 &1218181316162512352
 GameObject:
   m_ObjectHideFlags: 0

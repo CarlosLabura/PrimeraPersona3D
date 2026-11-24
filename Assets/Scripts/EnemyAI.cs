@@ -36,6 +36,10 @@ public class EnemyAI : MonoBehaviour
         UpdateTarget();
         InvokeRepeating(nameof(UpdateTarget), 3f, .2f);
     }
+    private void OnDestroy()
+    {
+        HealthSystem.OnEnemyDeath -= EnemyDeath;
+    }
     private static readonly int SpeedAnim = Animator.StringToHash("WalkingSpeed");
     private void Update()
     {
