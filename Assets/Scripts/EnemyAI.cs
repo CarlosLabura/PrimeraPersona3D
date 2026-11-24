@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
+public enum EnemyState { Patrol, Following }
 [RequireComponent(typeof(HealthSystem))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
     // Inspector Variables
+    public EnemyState State;
     public Transform Target;
     [SerializeField] private Animator ModelAnimator;
 
