@@ -1,8 +1,7 @@
 
 using UnityEngine;
-public class Projectile : MonoBehaviour
+public class ProjectileCollision : MonoBehaviour
 { 
-    public int Damage = 20;
     void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);

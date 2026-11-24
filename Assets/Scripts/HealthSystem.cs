@@ -1,6 +1,6 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour
 {
@@ -8,23 +8,23 @@ public class HealthSystem : MonoBehaviour
     [Header("Health Configs")]
     public bool IsPlayer = false;
     public int MaxHealth = 100;
-    [Space(2)]
-    public float EnemyDestroyTime = 3f;
-    public int EnemyDamage = 10;
+    [ShowIf("IsPlayer")] public int EnemyDamage = 10;
+    [ShowIf("IsPlayer")] public int ProjectileDamage = 20;
+    [ShowIf("IsPlayer", true)] public float EnemyDestroyTime = 3f;
 
     [Header("Objects Needed")]
     [SerializeField] private Image HealthBar;
     [SerializeField] private Image DamageBar;
-    [SerializeField] private Victory VictoryScript;
-    [Space(2)]
-    [SerializeField] private TextMeshProUGUI GameOverText;
-    [Space(2)]
-    [SerializeField] private Transform EnemyHealthCanvas;
-    [SerializeField] private Animator EnemyModelAnimator;
+    [ShowIf("IsPlayer", true)] [SerializeField] private Transform EnemyHealthCanvas;
 
     [Header("Script Data")]
     [ReadOnly] public int Health = 0;
-    [ReadOnly]  public bool Dead = false;
+    [ReadOnly] public bool IsDead = false;
+
+    // Internal Variables
+    public Action OnEnemyDeath;
+    public Action OnPlayerDeath;
+    //https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/ide1005
 
     // Needed Components 
     private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
@@ -32,30 +32,22 @@ public class HealthSystem : MonoBehaviour
     {
         StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
     }
-    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0041.md
-    private static readonly int IsDead = Animator.StringToHash("Dead");
     public void Damage(int amount)
     {
         Health -= amount;
 
-        if (Health <= 0 && !Dead) {
-            Dead = true;
+        if (Health <= 0 && !IsDead) {
+            IsDead = true;
             if (IsPlayer) {
-                GameOverText.SetText("Game Over");
+                OnPlayerDeath?.Invoke();
                 StarterAssetsInputs.Locked = true;
-                Time.timeScale = 0f;
+                // Locked / Not destoyed to keep the scripts running
             } else
             {
-                EnemyModelAnimator.SetBool(IsDead, true);
-                VictoryScript.UpdateCounter();
+                OnEnemyDeath?.Invoke();
                 Destroy(gameObject, EnemyDestroyTime);
             }
         }
-    }
-    public void Restart()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void Start()
     {
@@ -63,15 +55,16 @@ public class HealthSystem : MonoBehaviour
     }
     private void Update()
     {
-        DamageBar.fillAmount = Mathf.Lerp(DamageBar.fillAmount, (float) Health/MaxHealth, Time.deltaTime);
+        DamageBar.fillAmount = Mathf.Lerp(DamageBar.fillAmount, (float) Health/MaxHealth, Time.deltaTime*2.5f);
         HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, (float) Health/MaxHealth, Time.deltaTime*5);
+
         if (!IsPlayer)
             EnemyHealthCanvas.rotation = Camera.main.transform.rotation;
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
-            Damage(collision.gameObject.GetComponent<Projectile>().Damage);
+            Damage(ProjectileDamage);
 
         if (IsPlayer && collision.gameObject.CompareTag("Enemy"))
             Damage(EnemyDamage);

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using System.ComponentModel;
-
 [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
 {
