@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 [System.Serializable]
 public struct AnimatedImage
 {
@@ -10,13 +11,22 @@ public struct AnimatedImage
 }
 public class StartAnimation : MonoBehaviour
 {
+    [SerializeField] private RawImage StartText;
+    [SerializeField] private RawImage BlackScreen;
     [SerializeField] private AnimatedImage[] Images;
     public float AnimationSpeed = 10f;
     private bool Started = false;
+    public void OnShoot(InputValue value)
+    {
+        if (!Started)
+        {
+            Started = true;
+            StartText.color = new Color(1,1,1,0);
+            BlackScreen.color = Color.white;
+        }
+    }
     private void Start()
     {
-        Started = true;
-
         for (int i = 0; i < Images.Length; i++)
         {
             AnimatedImage Image = Images[i];
@@ -26,9 +36,10 @@ public class StartAnimation : MonoBehaviour
     }
     private void Update()
     {
-        if (!Started) 
+        if (!Started)
             return;
-
+            
+        BlackScreen.color = Color.Lerp(BlackScreen.color, new Color(1,1,1,0), Time.deltaTime * AnimationSpeed);
         for (int i = 0; i < Images.Length; i++)
         {
             AnimatedImage Image = Images[i];
