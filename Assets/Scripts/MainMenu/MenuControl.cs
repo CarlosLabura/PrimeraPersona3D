@@ -22,13 +22,6 @@ public class MenuControl : MonoBehaviour
     private string LevelSelected;
 
     // Components Needed
-    private StartAnimation StartAnimation;
-
-    private void Awake()
-    {
-        StartAnimation = GetComponent<StartAnimation>();
-    }
-
     private void Start()
     {
         Levels = LevelInfo.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -47,15 +40,9 @@ public class MenuControl : MonoBehaviour
             MainMenuItem.Load();
         }
     }
-
-    private void ChangeItem(string Level)
-    {
-        LevelSelected = Level;
-    }
-
     private void Update()
     {
-        if (StartAnimation != null && StartAnimation.Started)
+        if (StartAnimation.Started)
         {
 
         }
