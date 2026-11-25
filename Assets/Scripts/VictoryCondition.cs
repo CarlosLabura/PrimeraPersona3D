@@ -44,7 +44,7 @@ public class VictoryCondition : MonoBehaviour
     }
     private void EnemyDeath()
     {
-        EnemiesLeft -= 1;
+        EnemiesLeft--;
         Counter.SetText(EnemiesLeft+"/"+MaxEnemies);
 
         if (EnemiesLeft <= 0)

@@ -15,7 +15,7 @@ public class StartAnimation : MonoBehaviour
     [SerializeField] private RawImage BlackScreen;
     [SerializeField] private AnimatedImage[] Images;
     public float AnimationSpeed = 10f;
-    private bool Started = false;
+    [ReadOnly] public bool Started = false;
     public void OnShoot(InputValue value)
     {
         if (!Started)
