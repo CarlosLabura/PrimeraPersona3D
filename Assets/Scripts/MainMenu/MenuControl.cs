@@ -16,11 +16,9 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private Transform MenuContainer;
     [SerializeField] private RawImage BlackScreen;
 
-    [Header("Script Data")]
-    [ReadOnly] public string Selected = "";
-    [HideInInspector] public bool Loaded = false;
-
     // Internal Variables
+    [HideInInspector] public string Selected = "";
+    [HideInInspector] public bool Loaded = false;
     private const string LevelPath = "Scenes/";
     private string[] Levels;
 
