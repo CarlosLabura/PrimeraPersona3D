@@ -19,6 +19,8 @@ public class VictoryCondition : MonoBehaviour
     // Internal Variables
     public static VictoryCondition Instance;
     private int MaxEnemies = 0;
+    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0038.md
+    private static readonly WaitForSeconds WaitSecond = new(1f);
 
     // Needed Components 
     private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
@@ -49,16 +51,15 @@ public class VictoryCondition : MonoBehaviour
         StarterAssetsInputs.Locked = true;
         StartCoroutine(Count());
     }
-    private static WaitForSeconds _waitForSeconds1 = new WaitForSeconds(1f);
     private IEnumerator Count()
     {
-        yield return _waitForSeconds1;
+        yield return WaitSecond;
         GameOver.SetText("3");
-        yield return _waitForSeconds1;
+        yield return WaitSecond;
         GameOver.SetText("2");
-        yield return _waitForSeconds1;
+        yield return WaitSecond;
         GameOver.SetText("1");
-        yield return _waitForSeconds1;
+        yield return WaitSecond;
         CountFinished();
     }
     private void CountFinished()
