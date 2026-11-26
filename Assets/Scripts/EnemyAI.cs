@@ -7,6 +7,10 @@ public class EnemyAI : MonoBehaviour
 {
     public EnemyState State;
 
+    [Header("Enemy Sight")]
+    [Min(0f)] public float DetectionRange = 10f;
+    [Min(0f)] public float LoseRange = 15f;
+
     [Header("Objects Needed")]
     public Transform Target;
     [SerializeField] private Animator ModelAnimator;
@@ -16,32 +20,20 @@ public class EnemyAI : MonoBehaviour
     private static readonly int DeadAnim = Animator.StringToHash("Dead");
     private static readonly int SpeedAnim = Animator.StringToHash("WalkingSpeed");
 
-    // Needed Components 
+    // Needed Components
     private HealthSystem HealthSystem;
     private NavMeshAgent NavMeshAgent;
+
     private void Awake()
     {
         HealthSystem = GetComponent<HealthSystem>();
         NavMeshAgent = GetComponent<NavMeshAgent>();
     }
-    private void UpdateTarget()
-    {
-        if (HealthSystem.IsDead)
-            return;
-
-        NavMeshAgent.destination = Target.position;
-    }
-    private void EnemyDeath()
-    {
-        ModelAnimator.SetBool(DeadAnim, true);
-        Debug.Log($"Playing {name} Death Animation");
-    }
-     //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0016.md
+    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0016.md
     private void Start()
     {
         HealthSystem.OnEnemyDeath += EnemyDeath;
-        UpdateTarget();
-        InvokeRepeating(nameof(UpdateTarget), 3f, .2f);
+        InvokeRepeating(nameof(UpdateStateMachine), 0f, .2f);
     }
     private void OnDestroy()
     {
@@ -51,6 +43,48 @@ public class EnemyAI : MonoBehaviour
     {
         if (HealthSystem.IsDead)
             NavMeshAgent.speed = 0;
+
         ModelAnimator.SetFloat(SpeedAnim, NavMeshAgent.velocity.magnitude);
+    }
+    private void UpdateStateMachine()
+    {
+        if (HealthSystem.IsDead || Target == null)
+            return;
+
+        float sqrDistance = (Target.position - transform.position).sqrMagnitude;
+        switch (State)
+        {
+            case EnemyState.Patrol:
+                if (sqrDistance <= DetectionRange * DetectionRange)
+                    ChangeState(EnemyState.Following);
+                break;
+
+            case EnemyState.Following:
+                if (sqrDistance > LoseRange * LoseRange)
+                    ChangeState(EnemyState.Patrol);
+                else
+                    NavMeshAgent.destination = Target.position;
+                break;
+        }
+    }
+    private void ChangeState(EnemyState newState)
+    {
+        State = newState;
+        switch (newState)
+        {
+            case EnemyState.Patrol:
+                NavMeshAgent.ResetPath();
+                break;
+            case EnemyState.Following:
+                NavMeshAgent.destination = Target.position;
+                break;
+        }
+    }
+    private void EnemyDeath()
+    {
+        CancelInvoke(nameof(UpdateStateMachine));
+        NavMeshAgent.ResetPath();
+        ModelAnimator.SetBool(DeadAnim, true);
+        Debug.Log($"Playing {name} Death Animation");
     }
 }
