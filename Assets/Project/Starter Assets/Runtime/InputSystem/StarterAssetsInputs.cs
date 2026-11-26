@@ -12,6 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool Locked = false;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -19,9 +20,14 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
-		public bool Locked = false;
+
+		[Header("Shooting Settings")]
+		public float ProjectileSpeed;
+		[SerializeField] private GameObject Projectile;
+		[SerializeField] private Transform SpawnPoint;
 
 #if ENABLE_INPUT_SYSTEM
+		// On Inputs
 		public void OnMove(InputValue value)
 		{
 			if (Locked)
@@ -29,14 +35,6 @@ namespace StarterAssets
 
 			MoveInput(value.Get<Vector2>());
 		}
-		public void OnShoot(InputValue value)
-		{
-			if (Locked)
-				return;
-
-			Shoot();
-		}
-
 		public void OnLook(InputValue value)
 		{
 			if (Locked)
@@ -47,7 +45,6 @@ namespace StarterAssets
 				LookInput(value.Get<Vector2>());
 			}
 		}
-
 		public void OnJump(InputValue value)
 		{
 			if (Locked)
@@ -55,7 +52,6 @@ namespace StarterAssets
 
 			JumpInput(value.isPressed);
 		}
-
 		public void OnSprint(InputValue value)
 		{
 			if (Locked)
@@ -63,45 +59,43 @@ namespace StarterAssets
 				
 			SprintInput(value.isPressed);
 		}
-#endif
-
-		[Header("Shooting Settings")]
-		[SerializeField] private GameObject Projectile;
-		[SerializeField] private Transform SpawnPoint;
-		public float ProjectileSpeed;
-		public void Shoot()
+		public void OnShoot(InputValue value)
 		{
-			GameObject pro = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
-			pro.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(
-				0,0, ProjectileSpeed), ForceMode.Impulse);
-			Destroy(pro, 5f);
-		}
+			if (Locked)
+				return;
 
+			ShootInput();
+		}
+#endif
+		// Input Results
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
-
 		public void LookInput(Vector2 newLookDirection)
 		{
 			look = newLookDirection;
 		}
-
 		public void JumpInput(bool newJumpState)
 		{
 			jump = newJumpState;
 		}
-
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}
-		
+		public void ShootInput()
+		{
+			GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
+			ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
+			Destroy(ProjectileObject, 5f);
+		}
+
+		// Other Methods
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
-
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
