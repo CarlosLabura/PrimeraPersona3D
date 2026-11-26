@@ -24,12 +24,15 @@ public class MainMenuItem : MonoBehaviour
     [HideInInspector] public StartAnimation StartAnimation; //cuz im lazy this compoennt is asigned in MenuControl.cs
     public void Load()
     {
+        name = LevelName;
         OriginalScale = transform.localScale;
 
         Color Color = BG.color;
         BG.color = new Color(Color.r, Color.g, Color.b, Alpha);
 
         Preview.texture = Resources.Load<Texture2D>("Previews/"+LevelName);
+
+        Debug.Log($"Loading {name} into Scene");
     }
     private void Update()
     {

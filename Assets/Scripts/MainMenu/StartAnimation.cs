@@ -33,6 +33,7 @@ public class StartAnimation : MonoBehaviour
     {
         if (!Started)
         {
+            Debug.Log("Started Menu");
             Started = true;
             StartText.color = new Color(1,1,1,0);
             BlackScreen.color = Color.white;
@@ -80,5 +81,7 @@ public class StartAnimation : MonoBehaviour
 
         if (color)
             image.color = Color.Lerp(image.color, Color.white, time);
+
+        //Debug.Log($"Animating {image.name}, POS: {position} ROT: {rotation} COL: {color}");
     }
 }

@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     private void EnemyDeath()
     {
         ModelAnimator.SetBool(DeadAnim, true);
+        Debug.Log($"Playing {name} Death Animation");
     }
      //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0016.md
     private void Start()

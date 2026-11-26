@@ -89,6 +89,7 @@ namespace StarterAssets
 			GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
 			ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
 			Destroy(ProjectileObject, 5f);
+			Debug.Log($"Player shot Projectile from X: {ProjectileObject.transform.position.x} Y: {ProjectileObject.transform.position.y} Z: {ProjectileObject.transform.position.z}");
 		}
 
 		// Other Methods

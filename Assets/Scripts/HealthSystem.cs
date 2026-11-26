@@ -35,6 +35,7 @@ public class HealthSystem : MonoBehaviour
     public void Damage(int amount)
     {
         Health -= amount;
+        Debug.Log($"{name}: Damaged by: {amount}");
 
         if (Health <= 0 && !IsDead) {
             IsDead = true;
@@ -42,12 +43,12 @@ public class HealthSystem : MonoBehaviour
                 OnPlayerDeath?.Invoke();
                 StarterAssetsInputs.Locked = true;
                 // Locked / Not destoyed to keep the scripts running
-            } else
-            {
+            } else {
                 OnEnemyDeath?.Invoke();
                 OnAnyEnemyDeath?.Invoke();
                 Destroy(gameObject, EnemyDestroyTime);
             }
+            Debug.Log($"{name} died at Position: X: {transform.position.x} Y: {transform.position.y} Z: {transform.position.z}");
         }
     }
     private void Start()

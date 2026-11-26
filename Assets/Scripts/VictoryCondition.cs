@@ -14,6 +14,7 @@ public class VictoryCondition : MonoBehaviour
     [ReadOnly] public int EnemiesLeft = 0;
 
     // Internal Variables
+    public static VictoryCondition Instance;
     private int MaxEnemies = 0;
 
     // Needed Components 
@@ -21,16 +22,26 @@ public class VictoryCondition : MonoBehaviour
     private HealthSystem HealthSystem;
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {   
+            Debug.Log($"Destoying Script on {name}");
+            Destroy(gameObject);
+        }
+
         StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
         HealthSystem = GetComponent<HealthSystem>();
     }
     public void Restart()
     {
+        Debug.Log("Restarting Scene");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void PlayerWin()
     {
+        Debug.Log("Player Won");
         State = GameState.Victory;
         GameOver.SetText("Victory!");
         StarterAssetsInputs.Locked = true;

@@ -54,6 +54,7 @@ public class MenuControl : MonoBehaviour
         if (MainMenuItem.SelectedLevel != "") {
             BlackScreen.color = new Color(0,0,0,0);
             Selected = MainMenuItem.SelectedLevel;
+            Debug.Log($"Selected {Selected} in menu, Starting load");
         }
     }
     private void Update()
@@ -61,12 +62,15 @@ public class MenuControl : MonoBehaviour
         if (!StartAnimation.Started) //Below: Menu Started
             return;
 
-        if (Background.texture is Texture2D Texture2D)
+        if (Background.texture is Texture2D Texture2D) {
             if (Background.texture.name != MainMenuItem.SelectedLevel && MainMenuItem.SelectedLevel != "") {
                 Texture2D = Resources.Load<Texture2D>("Previews/"+MainMenuItem.SelectedLevel);
                 if (Texture2D != null)
                     Background.texture = Texture2D;
+                else
+                    Debug.Log("Background texture could not be found");
             }
+        }
         
         if (Selected == "") //Below: Selected Something
             return;
@@ -75,6 +79,7 @@ public class MenuControl : MonoBehaviour
         {
             BlackScreen.color = Color.Lerp(BlackScreen.color, Color.black, Time.deltaTime * TransitionSpeed);
             if (BlackScreen.color.a >= 0.99){
+                Debug.Log("Loading into selected Scene");
                 Loaded = true;
                 SceneManager.LoadScene(LevelPath+Selected+"/Scene");
             }
