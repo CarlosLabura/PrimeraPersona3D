@@ -1,13 +1,36 @@
 using System;
 using UnityEngine;
+public enum ItemType {SpeedCan}
 public class ItemsBehaviour : MonoBehaviour
 {
+    [Header("Item Data")]
+    public ItemType Type;
+    public float Duration = 3f;
+
+    [Header("Item Animation")]
     public float AnimationSpeed = 0.015f;
+
+    [Header("Objects Needed")]
+    public GameObject Player;
+
+    // Internal Variables
     public static Action OnPlayerTake;
     private float AnimationTime;
 
+    private void ItemBehaviour(ItemType Item)
+    {
+        switch (Item)
+        {
+            case ItemType.SpeedCan:
+                Player.GetComponent<StarterAssets.FirstPersonController>().CanCollected(Duration);
+                break;
+            default:
+                break;
+        }
+    }
     private void GetItem()
     {
+        ItemBehaviour(Type);
         OnPlayerTake?.Invoke();
         Destroy(gameObject);
     }

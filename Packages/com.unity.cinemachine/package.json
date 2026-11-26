@@ -1,0 +1,69 @@
+{
+  "name": "com.unity.cinemachine",
+  "displayName": "Cinemachine",
+  "version": "3.1.8",
+  "unity": "2022.3",
+  "description": "Smart camera tools for passionate creators. \n\nCinemachine 3 is a newer and better version of Cinemachine, but upgrading an existing project from 2.X will likely require some effort.  If you're considering upgrading an older project, please see our upgrade guide in the user manual.",
+  "keywords": [
+    "camera",
+    "follow",
+    "rig",
+    "fps",
+    "cinematography",
+    "aim",
+    "orbit",
+    "cutscene",
+    "cinematic",
+    "collision",
+    "freelook",
+    "cinemachine",
+    "compose",
+    "composition",
+    "dolly",
+    "track",
+    "clearshot",
+    "noise",
+    "framing",
+    "handheld",
+    "lens",
+    "impulse"
+  ],
+  "category": "cinematography",
+  "dependencies": {
+    "com.unity.splines": "2.0.0",
+    "com.unity.modules.imgui": "1.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "2D Samples",
+      "description": "Sample scenes illustrating various ways to use Cinemachine in a 2D setting",
+      "path": "Samples~/2D Samples"
+    },
+    {
+      "displayName": "3D Samples",
+      "description": "Sample scenes illustrating various ways to use Cinemachine in a 3D setting",
+      "path": "Samples~/3D Samples"
+    },
+    {
+      "displayName": "Input System Samples",
+      "description": "Sample scenes illustrating various ways to use Cinemachine with the input system.",
+      "path": "Samples~/Input System Samples"
+    }
+  ],
+  "relatedPackages": {
+    "com.unity.cinemachine.tests": "3.1.8"
+  },
+  "_upm": {
+    "changelog": "### Bugfixes\n - Fixed jitter in mix camera sample caused by using physics velocity without smoothing\n - Changed static reset in CinemachineCore to happen during SubsystemRegistration\n - Fixed orbital jerk in CinemachineOrbitalFollow when blending with InheritPosition and damping (UUM-149754)\n - Fixed infinite recursion in the obsolete CinemachineConfiner.InvalidatePathCache()\n - Fixed SerializeReference warning when adding a modifier to CinemachineFreeLookModifier (UUM-147115)\n - Fixed visual elements staying hidden in inspectors after being shown again (SetVisible)\n - Removed the DebugText finalizer\n - Replaced obsolete Find APIs to fix compiler warnings in Unity 6000.4 and newer (UUM-156111)\n - Fixed Game view flickering when editing a Timeline clip in the Inspector while Timeline preview is active (UUM-152885)\n\n### Changed\n - The Cinemachine 2 to 3 upgrader now asks the user to save modified scenes before upgrading the project\n - Added documentation for Impulse fixed signals and refreshed its screenshots\n - Added documentation for Cinemachine Camera Offset"
+  },
+  "upmCi": {
+    "footprint": "572932d389a28aa8b32679e9d6fe7f06b589a476"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.cinemachine@3.1/manual/index.html",
+  "repository": {
+    "url": "https://github.com/Unity-Technologies/com.unity.cinemachine.git",
+    "type": "git",
+    "revision": "c5029245d8184491a47e3b5ab00e99cf1b0a09b3"
+  },
+  "_fingerprint": "f2cd014d716eebd6e03224b6a85bf8934df09d5f"
+}

@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
+using Unity.Cinemachine;
 
 namespace StarterAssets
 {
@@ -16,6 +17,8 @@ namespace StarterAssets
 		public float MoveSpeed = 4.0f;
 		[Tooltip("Sprint speed of the character in m/s")]
 		public float SprintSpeed = 6.0f;
+		[Tooltip("Move speed after taking a Speed Can")]
+		public float DrinkSpeed = 10.0f;
 		[Tooltip("Rotation speed of the character")]
 		public float RotationSpeed = 1.0f;
 		[Tooltip("Acceleration and deceleration")]
@@ -46,19 +49,23 @@ namespace StarterAssets
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
 		public GameObject CinemachineCameraTarget;
+		public CinemachineCamera Camera;
 		[Tooltip("How far in degrees can you move the camera up")]
 		public float TopClamp = 90.0f;
 		[Tooltip("How far in degrees can you move the camera down")]
 		public float BottomClamp = -90.0f;
+		public float FOVSpeed = 10f;
 
 		// cinemachine
 		private float _cinemachineTargetPitch;
+		private float TargetFOV;
 
 		// player
 		private float _speed;
 		private float _rotationVelocity;
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
+		private float _canTimer = 0f;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -115,11 +122,21 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			
+			if (_canTimer > 0)
+				_canTimer -= Time.deltaTime;
+			
+			Camera.Lens.FieldOfView = Mathf.Lerp(Camera.Lens.FieldOfView, TargetFOV, Time.deltaTime*FOVSpeed);
 		}
 
 		private void LateUpdate()
 		{
 			CameraRotation();
+		}
+
+		public void CanCollected(float Time)
+		{
+			_canTimer = Time;
 		}
 
 		private void GroundedCheck()
@@ -154,7 +171,21 @@ namespace StarterAssets
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			float targetSpeed;
+
+			if (_canTimer > 0) {
+				targetSpeed = DrinkSpeed;
+				TargetFOV = 80f;
+			} else {
+				if (_input.sprint) {
+					targetSpeed = SprintSpeed;
+					TargetFOV = 75f;
+				} else {
+					targetSpeed = MoveSpeed;
+					TargetFOV = 70f;
+				}
+			}
+			
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 

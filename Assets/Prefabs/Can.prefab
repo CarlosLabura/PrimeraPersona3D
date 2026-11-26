@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Can
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f84c19ea33fec57459a5d3639a2140bf, type: 3}
+      propertyPath: m_TagString
+      value: Item
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -95,7 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8813ab7414bac844ac6bca1a75f2517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemsBehaviour
+  Type: 0
+  Duration: 3
   AnimationSpeed: 0.0015
+  Player: {fileID: 1176169341140571984, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
 --- !u!136 &3085946498100288897
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -111,14 +118,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7160416
-  m_Height: 2.0142057
+  m_Radius: 0.78930753
+  m_Height: 2.2653708
   m_Direction: 1
-  m_Center: {x: 0, y: -0.0062607643, z: 0.0036592146}
+  m_Center: {x: 0, y: -0.0013229778, z: -0.0050918614}
 --- !u!114 &1317629280145680898
 MonoBehaviour:
   m_ObjectHideFlags: 0

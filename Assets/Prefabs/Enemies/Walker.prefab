@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   State: 0
-  Target: {fileID: 0}
+  Target: {fileID: 3061381076439982687, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
   ModelAnimator: {fileID: 4093439998667950783}
 --- !u!114 &6033668733805081416
 MonoBehaviour:
