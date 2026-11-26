@@ -7,11 +7,13 @@ public class VictoryCondition : MonoBehaviour
     public GameState State = GameState.Active;
 
     [Header("Objects Needed")]
+    [SerializeField] private TextMeshProUGUI Timer;
     [SerializeField] private TextMeshProUGUI Counter;
     [SerializeField] private TextMeshProUGUI GameOver;
 
     [Header("Script Data")]
     [ReadOnly] public int EnemiesLeft = 0;
+    [ReadOnly] public float TimerTime = 0;
 
     // Internal Variables
     public static VictoryCondition Instance;
@@ -41,11 +43,16 @@ public class VictoryCondition : MonoBehaviour
     }
     private void PlayerWin()
     {
-        Debug.Log("Player Won");
+        if (TimerTime > PlayerPrefs.GetFloat(GameData.CurrentLevel, 0f)){
+            PlayerPrefs.SetFloat(GameData.CurrentLevel, TimerTime);
+            PlayerPrefs.Save();
+        }
+
         State = GameState.Victory;
         GameOver.SetText("Victory!");
         StarterAssetsInputs.Locked = true;
         //Time.timeScale = 0f;
+        Debug.Log("Player Won");
     }
     private void PlayerDeath()
     {
@@ -57,20 +64,43 @@ public class VictoryCondition : MonoBehaviour
     private void EnemyDeath()
     {
         EnemiesLeft--;
-        Counter.SetText(EnemiesLeft+"/"+MaxEnemies);
+        UpdateCounter();
 
         if (EnemiesLeft <= 0)
             PlayerWin();
     }
+    public void UpdateCounter()
+    {
+        Counter.SetText(EnemiesLeft+"/"+MaxEnemies);
+    }
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         HealthSystem.OnAnyEnemyDeath += EnemyDeath; // this only runs with player health logic, so u must use the static method
         HealthSystem.OnPlayerDeath += PlayerDeath;
 
         MaxEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         EnemiesLeft = MaxEnemies;
 
-        Counter.SetText(EnemiesLeft+"/"+MaxEnemies);
+        UpdateCounter();
+    }
+    public static string ParseTime(float Time)
+    {
+        int m = Mathf.FloorToInt(Time / 60);
+        int s = Mathf.FloorToInt(Time % 60);
+        int ms = Mathf.FloorToInt((Time * 1000) % 1000);
+
+        return $"{m:00}:{s:00}:{ms:000}";
+    }
+    private void Update()
+    {
+        if (State != GameState.Active)
+            return;
+
+        TimerTime += Time.deltaTime;
+        Timer.text = ParseTime(TimerTime);
     }
     private void OnDestroy()
     {

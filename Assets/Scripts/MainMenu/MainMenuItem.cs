@@ -19,9 +19,7 @@ public class MainMenuItem : MonoBehaviour
     private Vector3 OriginalScale;
     [HideInInspector] public bool Selected = false;
     public static string SelectedLevel = "";
-
-    // Components Needed
-    [HideInInspector] public StartAnimation StartAnimation; //cuz im lazy this compoennt is asigned in MenuControl.cs
+    
     public void Load()
     {
         name = LevelName;
@@ -32,11 +30,13 @@ public class MainMenuItem : MonoBehaviour
 
         Preview.texture = Resources.Load<Texture2D>("Previews/"+LevelName);
 
+        Record.text = VictoryCondition.ParseTime(PlayerPrefs.GetFloat(LevelName, 0f));
+
         Debug.Log($"Loading {name} into Scene");
     }
     private void Update()
     {
-        if (!StartAnimation.Started)
+        if (!StartAnimation.Instance.Started)
             return;
 
         if (IsMouseOver(BG))

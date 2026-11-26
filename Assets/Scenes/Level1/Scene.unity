@@ -8601,6 +8601,10 @@ PrefabInstance:
       propertyPath: SpawnPoint
       value: 
       objectReference: {fileID: 1382133072}
+    - target: {fileID: 6072501068198986533, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
+      propertyPath: m_text
+      value: 00:00:000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

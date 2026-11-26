@@ -9,7 +9,6 @@ public struct AnimatedImage
     public bool RotationAnimated;
     public bool ColorAnimated;
 }
-[RequireComponent(typeof(MenuControl))]
 public class StartAnimation : MonoBehaviour
 {
     [Header("Animation Settings")]
@@ -21,13 +20,18 @@ public class StartAnimation : MonoBehaviour
     [SerializeField] private AnimatedImage[] Images;
 
     //Internal Variables
+    public static StartAnimation Instance;
     [HideInInspector] public bool Started = false;
-
-    // Components Needed
-    private MenuControl MenuControl;
+    
     private void Awake()
     {
-        MenuControl = GetComponent<MenuControl>();
+        if (Instance == null)
+            Instance = this;
+        else
+        {   
+            Debug.Log($"Destoying Script on {name}");
+            Destroy(gameObject);
+        }
     }
     public void OnShoot(InputValue value)
     {
@@ -51,7 +55,7 @@ public class StartAnimation : MonoBehaviour
     }
     private void Update()
     {
-        if (MenuControl.Selected != "")
+        if (MenuControl.Instance.Selected != "")
             return;
 
         if (!Started) {

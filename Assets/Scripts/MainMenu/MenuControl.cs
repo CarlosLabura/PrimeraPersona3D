@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-[RequireComponent(typeof(StartAnimation))]
 public class MenuControl : MonoBehaviour
 {
     [Header("Menu Data")]
@@ -18,16 +17,21 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private RawImage BlackScreen;
 
     // Internal Variables
+    public static MenuControl Instance;
     [HideInInspector] public string Selected = "";
     [HideInInspector] public bool Loaded = false;
     private static readonly string LevelPath = "Scenes/";
     private string[] Levels;
-
-    // Components Needed
-    private StartAnimation StartAnimation;
+    
     private void Awake()
     {
-        StartAnimation = GetComponent<StartAnimation>();
+        if (Instance == null)
+            Instance = this;
+        else
+        {   
+            Debug.Log($"Destoying Script on {name}");
+            Destroy(gameObject);
+        }
     }
     private void Start()
     {
@@ -40,7 +44,6 @@ public class MenuControl : MonoBehaviour
 
             MainMenuItem MainMenuItem = Object.GetComponent<MainMenuItem>();
             MainMenuItem.LevelName = Levels[i];
-            MainMenuItem.StartAnimation = StartAnimation; // why did yall let him cook
 
             MainMenuItem.Load();
         }
@@ -59,7 +62,7 @@ public class MenuControl : MonoBehaviour
     }
     private void Update()
     {
-        if (!StartAnimation.Started) //Below: Menu Started
+        if (!StartAnimation.Instance.Started) //Below: Menu Started
             return;
 
         if (Background.texture is Texture2D Texture2D) {
@@ -81,6 +84,7 @@ public class MenuControl : MonoBehaviour
             if (BlackScreen.color.a >= 0.99){
                 Debug.Log("Loading into selected Scene");
                 Loaded = true;
+                GameData.CurrentLevel = Selected;
                 SceneManager.LoadScene(LevelPath+Selected+"/Scene");
             }
         }
