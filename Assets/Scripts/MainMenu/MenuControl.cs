@@ -37,6 +37,7 @@ public class MenuControl : MonoBehaviour
 
             MainMenuItem.Load();
         }
+        Background.texture = Resources.Load<Texture2D>("Previews/"+Levels[0]);
     }
     public void OnShoot(InputValue value)
     {
@@ -50,10 +51,17 @@ public class MenuControl : MonoBehaviour
     }
     private void Update()
     {
-        if (!StartAnimation.Started)
+        if (!StartAnimation.Started) //Below: Menu Started
             return;
+
+        if (Background.texture is Texture2D Texture2D)
+            if (Background.texture.name != MainMenuItem.SelectedLevel && MainMenuItem.SelectedLevel != "") {
+                Texture2D = Resources.Load<Texture2D>("Previews/"+MainMenuItem.SelectedLevel);
+                if (Texture2D != null)
+                    Background.texture = Texture2D;
+            }
         
-        if (Selected == "")
+        if (Selected == "") //Below: Selected Something
             return;
 
         if (!Loaded)
