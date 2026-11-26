@@ -8201,7 +8201,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1066839284563001124, guid: 44aca37fbf08edb4caca94339830bd9e, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Walker
       objectReference: {fileID: 0}
     - target: {fileID: 3404014281039409895, guid: 44aca37fbf08edb4caca94339830bd9e, type: 3}
       propertyPath: m_LocalPosition.x
