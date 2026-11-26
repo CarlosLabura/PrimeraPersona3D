@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+[RequireComponent(typeof(StartAnimation))]
 public class MenuControl : MonoBehaviour
 {
     [Header("Menu Data")]
@@ -19,7 +20,7 @@ public class MenuControl : MonoBehaviour
     // Internal Variables
     [HideInInspector] public string Selected = "";
     [HideInInspector] public bool Loaded = false;
-    private const string LevelPath = "Scenes/";
+    private static readonly string LevelPath = "Scenes/";
     private string[] Levels;
 
     // Components Needed

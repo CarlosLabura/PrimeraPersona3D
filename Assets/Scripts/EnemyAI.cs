@@ -5,10 +5,16 @@ public enum EnemyState { Patrol, Following }
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
-    // Inspector Variables
     public EnemyState State;
+
+    [Header("Objects Needed")]
     public Transform Target;
     [SerializeField] private Animator ModelAnimator;
+
+    // Internal Variables
+    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0041.md
+    private static readonly int DeadAnim = Animator.StringToHash("Dead");
+    private static readonly int SpeedAnim = Animator.StringToHash("WalkingSpeed");
 
     // Needed Components 
     private HealthSystem HealthSystem;
@@ -25,8 +31,6 @@ public class EnemyAI : MonoBehaviour
 
         NavMeshAgent.destination = Target.position;
     }
-    //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0041.md
-    private static readonly int DeadAnim = Animator.StringToHash("Dead");
     private void EnemyDeath()
     {
         ModelAnimator.SetBool(DeadAnim, true);
@@ -42,7 +46,6 @@ public class EnemyAI : MonoBehaviour
     {
         HealthSystem.OnEnemyDeath -= EnemyDeath;
     }
-    private static readonly int SpeedAnim = Animator.StringToHash("WalkingSpeed");
     private void Update()
     {
         if (HealthSystem.IsDead)

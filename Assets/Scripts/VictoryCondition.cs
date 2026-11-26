@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 public enum GameState { Active, GameOver, Victory, Pause }
 public class VictoryCondition : MonoBehaviour
 {
-    [Header("Objects Needed")]
     public GameState State = GameState.Active;
+
+    [Header("Objects Needed")]
     [SerializeField] private TextMeshProUGUI Counter;
     [SerializeField] private TextMeshProUGUI GameOver;
 

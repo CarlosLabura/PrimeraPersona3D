@@ -9,6 +9,7 @@ public struct AnimatedImage
     public bool RotationAnimated;
     public bool ColorAnimated;
 }
+[RequireComponent(typeof(MenuControl))]
 public class StartAnimation : MonoBehaviour
 {
     [Header("Animation Settings")]

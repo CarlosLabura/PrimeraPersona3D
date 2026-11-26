@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour
@@ -19,12 +18,12 @@ public class HealthSystem : MonoBehaviour
 
     [Header("Script Data")]
     [ReadOnly] public int Health = 0;
-    [ReadOnly] public bool IsDead = false;
 
     // Internal Variables
-    public Action OnEnemyDeath;
-    public Action OnPlayerDeath;
-    public static Action OnAnyEnemyDeath;
+    [HideInInspector] public bool IsDead = false;
+    public Action OnEnemyDeath;     // Runs only if IsPlayer = false
+    public Action OnPlayerDeath;    // Runs only if IsPlayer = true
+    public static Action OnAnyEnemyDeath; //Runs everytime some enemy die
     //https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/ide1005
 
     // Needed Components 
