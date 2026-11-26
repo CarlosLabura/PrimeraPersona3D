@@ -20,6 +20,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+/.vscode/
 /[Uu]ser[Ss]ettings/
 *.log
 
