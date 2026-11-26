@@ -1,10 +1,11 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public enum GameState { Active, GameOver, Victory, Pause }
+public enum GameState { Active, GameOver, Victory, Pause, Counting }
 public class VictoryCondition : MonoBehaviour
 {
-    public GameState State = GameState.Active;
+    public GameState State = GameState.Counting;
 
     [Header("Objects Needed")]
     [SerializeField] private TextMeshProUGUI Timer;
@@ -40,6 +41,32 @@ public class VictoryCondition : MonoBehaviour
         Debug.Log("Restarting Scene");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    private void StartCount()
+    {
+        Debug.Log("Starting Count");
+        State = GameState.Counting;
+        StarterAssetsInputs.Locked = true;
+        StartCoroutine(Count());
+    }
+    private static WaitForSeconds _waitForSeconds1 = new WaitForSeconds(1f);
+    private IEnumerator Count()
+    {
+        yield return _waitForSeconds1;
+        GameOver.SetText("3");
+        yield return _waitForSeconds1;
+        GameOver.SetText("2");
+        yield return _waitForSeconds1;
+        GameOver.SetText("1");
+        yield return _waitForSeconds1;
+        CountFinished();
+    }
+    private void CountFinished()
+    {
+        Debug.Log("Counting finished");
+        GameOver.SetText("");
+        State = GameState.Active;
+        StarterAssetsInputs.Locked = false;
     }
     private void PlayerWin()
     {
@@ -85,6 +112,8 @@ public class VictoryCondition : MonoBehaviour
         EnemiesLeft = MaxEnemies;
 
         UpdateCounter();
+
+        StartCount();
     }
     public static string ParseTime(float Time)
     {
