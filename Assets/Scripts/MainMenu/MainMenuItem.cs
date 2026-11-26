@@ -4,8 +4,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class MainMenuItem : MonoBehaviour
 {
+    [Header("Item Settings")]
     public string LevelName;
     public float SelectionTime = 15f;
+
+    [Header("Item Objects")]
     public RawImage BG;
     public RawImage Preview;
     public TextMeshProUGUI Record;
@@ -16,6 +19,9 @@ public class MainMenuItem : MonoBehaviour
     private Vector3 OriginalScale;
     [HideInInspector] public bool Selected = false;
     public static string SelectedLevel = "";
+
+    // Components Needed
+    [HideInInspector] public StartAnimation StartAnimation; //cuz im lazy this compoennt is asigned in MenuControl.cs
     public void Load()
     {
         OriginalScale = transform.localScale;
@@ -46,7 +52,7 @@ public class MainMenuItem : MonoBehaviour
         BG.color = Color.Lerp(BGcolor, new Color(BGcolor.r,BGcolor.g,BGcolor.b,Alpha), Time.deltaTime * SelectionTime);
         transform.localScale = Vector3.Lerp(transform.localScale, OriginalScale * Scale, Time.deltaTime * SelectionTime);
     }
-    public static bool IsMouseOver(RawImage Image)
+    private bool IsMouseOver(RawImage Image) // Super inteligent code made NOT by me
     {
         if (Mouse.current == null) 
             return false;

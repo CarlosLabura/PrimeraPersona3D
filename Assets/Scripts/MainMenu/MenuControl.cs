@@ -16,24 +16,32 @@ public class MenuControl : MonoBehaviour
     [SerializeField] private Transform MenuContainer;
     [SerializeField] private RawImage BlackScreen;
 
+    [Header("Script Data")]
+    [ReadOnly] public string Selected = "";
+    [HideInInspector] public bool Loaded = false;
+
     // Internal Variables
     private const string LevelPath = "Scenes/";
     private string[] Levels;
-    public static string Selected = "";
-    public static bool Loaded = false;
 
     // Components Needed
+    private StartAnimation StartAnimation;
+    private void Awake()
+    {
+        StartAnimation = GetComponent<StartAnimation>();
+    }
     private void Start()
     {
         Levels = LevelInfo.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-        for (int i = 0; i < Levels.Length; i++)
+        for (int i = 0; i < Levels.Length; i++) //Load Menu Items
         {
             GameObject Object = Instantiate(MenuPrefab, MenuContainer, false);
             Object.GetComponent<RectTransform>().anchoredPosition3D = ItemStartPosition + ItemStartOffset * i;
 
             MainMenuItem MainMenuItem = Object.GetComponent<MainMenuItem>();
             MainMenuItem.LevelName = Levels[i];
+            MainMenuItem.StartAnimation = StartAnimation; // why did yall let him cook
 
             MainMenuItem.Load();
         }

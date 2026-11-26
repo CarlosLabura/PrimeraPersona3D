@@ -11,11 +11,23 @@ public struct AnimatedImage
 }
 public class StartAnimation : MonoBehaviour
 {
+    [Header("Animation Settings")]
+    public float AnimationSpeed = 10f;
+
+    [Header("Objects Needed")]
     [SerializeField] private RawImage StartText;
     [SerializeField] private RawImage BlackScreen;
     [SerializeField] private AnimatedImage[] Images;
-    public float AnimationSpeed = 10f;
-    public static bool Started = false;
+
+    //Internal Variables
+    [HideInInspector] public bool Started = false;
+
+    // Components Needed
+    private MenuControl MenuControl;
+    private void Awake()
+    {
+        MenuControl = GetComponent<MenuControl>();
+    }
     public void OnShoot(InputValue value)
     {
         if (!Started)
