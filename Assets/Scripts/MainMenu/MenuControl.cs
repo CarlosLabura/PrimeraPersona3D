@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.SceneManagement;
 public class MenuControl : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class MenuControl : MonoBehaviour
     private const string LevelPath = "Scenes/";
     private string[] Levels;
     public static string Selected = "";
-    private bool Loaded = false;
+    public static bool Loaded = false;
 
     // Components Needed
     private void Start()
@@ -35,9 +34,6 @@ public class MenuControl : MonoBehaviour
 
             MainMenuItem MainMenuItem = Object.GetComponent<MainMenuItem>();
             MainMenuItem.LevelName = Levels[i];
-
-            Levels[i] = LevelPath + Levels[i] + "/";
-            MainMenuItem.LevelPath = Levels[i];
 
             MainMenuItem.Load();
         }

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class MainMenuItem : MonoBehaviour
 {
     public string LevelName;
-    public string LevelPath;
+    public float SelectionTime = 15f;
     public RawImage BG;
     public RawImage Preview;
     public TextMeshProUGUI Record;
-    public float SelectionTime = 15f;
 
+    // Internal Variables
     private float Alpha = 0.5f;
     private float Scale = 1;
     private Vector3 OriginalScale;

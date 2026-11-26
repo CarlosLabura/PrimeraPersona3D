@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+[RequireComponent(typeof(RawImage))]
 public class TextScroll : MonoBehaviour
 {
     public Vector2 Scroll;
