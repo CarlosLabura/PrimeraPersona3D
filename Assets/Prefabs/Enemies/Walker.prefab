@@ -117,13 +117,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066839284563001124}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea632441661039146a21d50458f3451d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   State: 0
-  Target: {fileID: 3061381076439982687, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
+  Target: {fileID: 0}
   ModelAnimator: {fileID: 4093439998667950783}
 --- !u!114 &6033668733805081416
 MonoBehaviour:

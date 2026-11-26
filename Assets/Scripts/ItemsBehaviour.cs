@@ -32,6 +32,7 @@ public class ItemsBehaviour : MonoBehaviour
     {
         ItemBehaviour(Type);
         OnPlayerTake?.Invoke();
+        Debug.Log($"Player colleted {Type} at X: {transform.position.x} Y: {transform.position.y} Z: {transform.position.z}");
         Destroy(gameObject);
     }
 
@@ -47,18 +48,13 @@ public class ItemsBehaviour : MonoBehaviour
         Vector3 ObjectPosition = transform.position;
         Vector3 ObjectRotation = transform.rotation.eulerAngles;
 
-        transform.position = new Vector3(
-            ObjectPosition.x,
-            ObjectPosition.y + Mathf.Sin(AnimationTime)*AnimationSpeed,
-            ObjectPosition.z
-        );
         transform.SetPositionAndRotation(
             new Vector3(
                 ObjectPosition.x,
                 ObjectPosition.y + Mathf.Sin(AnimationTime)*AnimationSpeed,
                 ObjectPosition.z
             ),
-            Quaternion.Euler(ObjectRotation.x, ObjectRotation.y + AnimationTime*0.25f, ObjectRotation.z)
+            Quaternion.Euler(ObjectRotation.x, ObjectRotation.y + AnimationSpeed*100, ObjectRotation.z)
         );
     }
 }
