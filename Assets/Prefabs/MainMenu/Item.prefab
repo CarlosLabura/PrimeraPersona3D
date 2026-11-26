@@ -470,7 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8741f186c6153714a8fd8dabf12077bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuItem
-  Level: 
+  LevelName: 
+  LevelPath: 
   BG: {fileID: 6316129348610430289}
   Preview: {fileID: 8396562328538040836}
   Record: {fileID: 2956347815391627937}
+  SelectionTime: 15
+  Selected: 0

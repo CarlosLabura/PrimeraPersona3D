@@ -14,6 +14,8 @@ public class MainMenuItem : MonoBehaviour
     private float Alpha = 0.5f;
     private float Scale = 1;
     private Vector3 OriginalScale;
+    [HideInInspector] public bool Selected = false;
+    public static string SelectedLevel = "";
     public void Load()
     {
         OriginalScale = transform.localScale;
@@ -30,9 +32,12 @@ public class MainMenuItem : MonoBehaviour
 
         if (IsMouseOver(BG))
         {
+            SelectedLevel = LevelName;
             Scale = 1.1f;
             Alpha = 1f;
         } else {
+            if (SelectedLevel == LevelName)
+                SelectedLevel = "";
             Scale = 1f;
             Alpha = 0.5f;
         }
@@ -41,7 +46,6 @@ public class MainMenuItem : MonoBehaviour
         BG.color = Color.Lerp(BGcolor, new Color(BGcolor.r,BGcolor.g,BGcolor.b,Alpha), Time.deltaTime * SelectionTime);
         transform.localScale = Vector3.Lerp(transform.localScale, OriginalScale * Scale, Time.deltaTime * SelectionTime);
     }
-
     public static bool IsMouseOver(RawImage Image)
     {
         if (Mouse.current == null) 

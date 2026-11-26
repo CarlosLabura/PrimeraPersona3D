@@ -37,6 +37,9 @@ public class StartAnimation : MonoBehaviour
     }
     private void Update()
     {
+        if (MenuControl.Selected != "")
+            return;
+
         if (!Started) {
             StartText.color = Color.Lerp(StartText.color, Color.white, Time.deltaTime * AnimationSpeed);
             return;

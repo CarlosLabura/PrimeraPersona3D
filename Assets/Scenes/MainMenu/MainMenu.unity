@@ -716,12 +716,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuControl
   LevelInfo: {fileID: 4900000, guid: 90ef21a480f08f043ab320c84fdefe45, type: 3}
-  TransitionSpeed: 5
+  TransitionSpeed: 3
   ItemStartPosition: {x: -365, y: -150, z: 0}
   ItemStartOffset: {x: 355, y: 0, z: 0}
   Background: {fileID: 1633578346}
   MenuPrefab: {fileID: 8266889041273533823, guid: 5c54913a675ce1a4e8ea2b13b0ed809e, type: 3}
   MenuContainer: {fileID: 631374519}
+  BlackScreen: {fileID: 148252918}
 --- !u!1 &976493481
 GameObject:
   m_ObjectHideFlags: 0
