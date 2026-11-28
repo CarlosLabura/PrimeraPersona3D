@@ -45,7 +45,7 @@ public class ShootingSystem : MonoBehaviour
         if (Supershot)
         {
             SuperShots--;
-            Ray.GetComponent<RayColor>().SetAlpha(1);
+            Ray.GetComponent<RayColor>().SetAlpha(1); //i am too lazy and feeling silly
             Debug.Log($"{name} shot Ray from X: {transform.position.x} Y: {transform.position.y} Z: {transform.position.z}");
         } 
         else 
