@@ -72,7 +72,7 @@ public class VictoryCondition : MonoBehaviour
     }
     private void PlayerWin()
     {
-        if (TimerTime > PlayerPrefs.GetFloat(GameData.CurrentLevel, 0f)){
+        if (TimerTime < PlayerPrefs.GetFloat(GameData.CurrentLevel, 0f)){
             PlayerPrefs.SetFloat(GameData.CurrentLevel, TimerTime);
             PlayerPrefs.Save();
         }
