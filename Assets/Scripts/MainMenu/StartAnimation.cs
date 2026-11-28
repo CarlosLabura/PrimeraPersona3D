@@ -12,7 +12,7 @@ public struct AnimatedImage
 public class StartAnimation : MonoBehaviour
 {
     [Header("Animation Settings")]
-    public float AnimationSpeed = 10f;
+    public float AnimationSpeed = 7.5f;
 
     [Header("Objects Needed")]
     [SerializeField] private RawImage StartText;

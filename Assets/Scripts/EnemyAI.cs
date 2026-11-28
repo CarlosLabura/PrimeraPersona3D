@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Objects Needed")]
     public Transform Target;
-    [SerializeField] private Animator ModelAnimator;
+    public Animator ModelAnimator;
 
     // Internal Variables
     //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0041.md

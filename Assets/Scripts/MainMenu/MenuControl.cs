@@ -6,7 +6,7 @@ public class MenuControl : MonoBehaviour
 {
     [Header("Menu Data")]
     [SerializeField] private TextAsset LevelInfo;
-    public float TransitionSpeed = 0.75f;
+    public float TransitionSpeed = 3f;
     public Vector3 ItemStartPosition;
     public Vector3 ItemStartOffset;
 

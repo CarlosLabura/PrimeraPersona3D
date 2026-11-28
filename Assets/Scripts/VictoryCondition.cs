@@ -6,11 +6,12 @@ public enum GameState { Active, GameOver, Victory, Pause, Counting }
 public class VictoryCondition : MonoBehaviour
 {
     public GameState State = GameState.Counting;
+    public bool SkipCounter = false;
 
     [Header("Objects Needed")]
-    [SerializeField] private TextMeshProUGUI Timer;
-    [SerializeField] private TextMeshProUGUI Counter;
-    [SerializeField] private TextMeshProUGUI GameOver;
+    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI Counter;
+    public TextMeshProUGUI GameOver;
 
     [Header("Script Data")]
     [ReadOnly] public int EnemiesLeft = 0;
@@ -79,7 +80,8 @@ public class VictoryCondition : MonoBehaviour
         State = GameState.Victory;
         GameOver.SetText("Victory!");
         StarterAssetsInputs.Locked = true;
-        //Time.timeScale = 0f;
+        StarterAssetsInputs.LookInput(new Vector2(0,0));
+        Time.timeScale = 0.5f;
         Debug.Log("Player Won");
     }
     private void PlayerDeath()
@@ -114,7 +116,8 @@ public class VictoryCondition : MonoBehaviour
 
         UpdateCounter();
 
-        StartCount();
+        if (!SkipCounter)
+            StartCount();
     }
     public static string ParseTime(float Time)
     {

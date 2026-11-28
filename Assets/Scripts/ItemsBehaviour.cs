@@ -4,11 +4,11 @@ public enum ItemType {SpeedCan}
 public class ItemsBehaviour : MonoBehaviour
 {
     [Header("Item Data")]
-    public ItemType Type;
+    public ItemType Type = ItemType.SpeedCan;
     public float Duration = 3f;
 
     [Header("Item Animation")]
-    public float AnimationSpeed = 0.015f;
+    public float AnimationSpeed = 0.0015f;
 
     [Header("Objects Needed")]
     public GameObject Player;

@@ -21,13 +21,7 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-		[Header("Shooting Settings")]
-		public float ProjectileSpeed;
-		[SerializeField] private GameObject Projectile;
-		[SerializeField] private Transform SpawnPoint;
-
 #if ENABLE_INPUT_SYSTEM
-		// On Inputs
 		public void OnMove(InputValue value)
 		{
 			if (Locked)
@@ -59,15 +53,7 @@ namespace StarterAssets
 				
 			SprintInput(value.isPressed);
 		}
-		public void OnShoot(InputValue value)
-		{
-			if (Locked)
-				return;
-
-			ShootInput();
-		}
 #endif
-		// Input Results
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
@@ -84,15 +70,7 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-		public void ShootInput()
-		{
-			GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
-			ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
-			Destroy(ProjectileObject, 5f);
-			Debug.Log($"Player shot Projectile from X: {ProjectileObject.transform.position.x} Y: {ProjectileObject.transform.position.y} Z: {ProjectileObject.transform.position.z}");
-		}
 
-		// Other Methods
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);

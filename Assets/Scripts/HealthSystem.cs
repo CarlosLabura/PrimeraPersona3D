@@ -12,9 +12,9 @@ public class HealthSystem : MonoBehaviour
     [ShowIf("IsPlayer", true)] public float EnemyDestroyTime = 3f;
 
     [Header("Objects Needed")]
-    [SerializeField] private Image HealthBar;
-    [SerializeField] private Image DamageBar;
-    [ShowIf("IsPlayer", true)] [SerializeField] private Transform EnemyHealthCanvas;
+    public Image HealthBar;
+    public Image DamageBar;
+    [ShowIf("IsPlayer", true)] public Transform EnemyHealthCanvas;
 
     [Header("Script Data")]
     [ReadOnly] public int Health = 0;
