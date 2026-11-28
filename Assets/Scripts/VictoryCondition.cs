@@ -26,6 +26,7 @@ public class VictoryCondition : MonoBehaviour
     // Needed Components 
     private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
     private HealthSystem HealthSystem;
+    
     private void Awake()
     {
         if (Instance == null)

@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class TextScroll : MonoBehaviour
 {
     public Vector2 Scroll;
+
+    // Components Needed
     private RawImage RawImage;
+
     private void Awake()
     {
         RawImage = GetComponent<RawImage>();

@@ -1,10 +1,14 @@
 using UnityEngine;
-
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Outline))]
 public class RayColor : MonoBehaviour
 {
-    public float DissappearTime = 2;
+    [Min(0.1f)] public float DissappearTime = 2;
+
+    // Components Needed
     private MeshRenderer MeshRenderer;
     private Outline Outline;
+    
     private void Awake()
     {
         MeshRenderer = GetComponent<MeshRenderer>();

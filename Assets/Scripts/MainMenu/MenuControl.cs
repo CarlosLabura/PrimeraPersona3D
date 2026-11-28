@@ -5,24 +5,25 @@ using UnityEngine.SceneManagement;
 public class MenuControl : MonoBehaviour
 {
     [Header("Menu Data")]
-    [SerializeField] private TextAsset LevelInfo;
-    public float TransitionSpeed = 3f;
+    public TextAsset LevelInfo;
+    [Min(1f)] public float TransitionSpeed = 3f;
     public Vector3 ItemStartPosition;
     public Vector3 ItemStartOffset;
 
     [Header("Objects Needed")]
-    [SerializeField] private RawImage Background;
-    [SerializeField] private GameObject MenuPrefab;
-    [SerializeField] private Transform MenuContainer;
-    [SerializeField] private RawImage BlackScreen;
+    public RawImage Background;
+    public GameObject MenuPrefab;
+    public Transform MenuContainer;
+    public RawImage BlackScreen;
 
     // Internal Variables
     public static MenuControl Instance;
     [HideInInspector] public string Selected = "";
     [HideInInspector] public bool Loaded = false;
     private static readonly string LevelPath = "Scenes/";
+    private static readonly string PreviewPath = "Previews/";
     private string[] Levels;
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -47,7 +48,7 @@ public class MenuControl : MonoBehaviour
 
             MainMenuItem.Load();
         }
-        Background.texture = Resources.Load<Texture2D>("Previews/"+Levels[0]);
+        Background.texture = Resources.Load<Texture2D>(PreviewPath+Levels[0]);
     }
     public void OnShoot(InputValue value)
     {
@@ -67,7 +68,7 @@ public class MenuControl : MonoBehaviour
 
         if (Background.texture is Texture2D Texture2D) {
             if (Background.texture.name != MainMenuItem.SelectedLevel && MainMenuItem.SelectedLevel != "") {
-                Texture2D = Resources.Load<Texture2D>("Previews/"+MainMenuItem.SelectedLevel);
+                Texture2D = Resources.Load<Texture2D>(PreviewPath+MainMenuItem.SelectedLevel);
                 if (Texture2D != null)
                     Background.texture = Texture2D;
                 else

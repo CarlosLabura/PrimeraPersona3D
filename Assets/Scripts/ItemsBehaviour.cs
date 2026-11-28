@@ -5,11 +5,11 @@ public class ItemsBehaviour : MonoBehaviour
 {
     [Header("Item Data")]
     public ItemType Type = ItemType.SpeedCan;
-    public int Amount = 1;
-    public float Duration = 3f;
+    [Min(0)] public int Amount = 1;
+    [Min(0f)] public float Duration = 3f;
 
     [Header("Item Animation")]
-    public float AnimationSpeed = 0.0015f;
+    [Min(0.0001f)] public float AnimationSpeed = 0.0015f;
 
     [Header("Objects Needed")]
     public GameObject Player;

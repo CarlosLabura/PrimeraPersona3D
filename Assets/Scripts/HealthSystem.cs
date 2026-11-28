@@ -6,11 +6,11 @@ public class HealthSystem : MonoBehaviour
     // Inspector Variables
     [Header("Health Configs")]
     public bool IsPlayer = false;
-    public int MaxHealth = 100;
-    [ShowIf("IsPlayer")] public int EnemyDamage = 10;
-    [ShowIf("IsPlayer")] public int ProjectileDamage = 20;
-    [ShowIf("IsPlayer")] public int RayDamage = 100;
-    [ShowIf("IsPlayer", true)] public float EnemyDestroyTime = 3f;
+    [Min(0)] public int MaxHealth = 100;
+    [ShowIf("IsPlayer")] [Min(0)] public int EnemyDamage = 10;
+    [ShowIf("IsPlayer")] [Min(0)] public int ProjectileDamage = 20;
+    [ShowIf("IsPlayer")] [Min(0)] public int RayDamage = 100;
+    [ShowIf("IsPlayer", true)] [Min(0.1f)] public float EnemyDestroyTime = 3f;
 
     [Header("Objects Needed")]
     public Image HealthBar;

@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+[RequireComponent(typeof(HealthSystem))]
 public class ShootingSystem : MonoBehaviour
 {
     [Header("Shooting Settings")]
-    public float ProjectileSpeed = 15f;
-    public float ShootingDelay = 0.3f;
-    public float DestroyTime = 3f;
-    [ShowIf(typeof(HealthSystem), "IsPlayer")] public int SuperShots = 0;
-    [ShowIf(typeof(HealthSystem), "IsPlayer")] public float AnimationTime = 15f;
+    [Min(0.1f)] public float ProjectileSpeed = 15f;
+    [Min(0f)] public float ShootingDelay = 0.3f;
+    [Min(0.1f)] public float DestroyTime = 3f;
+    [ShowIf(typeof(HealthSystem), "IsPlayer")] [Min(0)] public int SuperShots = 0;
+    [ShowIf(typeof(HealthSystem), "IsPlayer")] [Min(1f)] public float AnimationTime = 15f;
 
     [Header("Objects Needed")]
     public GameObject Projectile;
@@ -22,6 +23,7 @@ public class ShootingSystem : MonoBehaviour
     // Components Needed
     private HealthSystem HealthSystem;
     private StarterAssets.StarterAssetsInputs StarterAssetsInputs;
+
     private void Awake()
     {
         HealthSystem = GetComponent<HealthSystem>();

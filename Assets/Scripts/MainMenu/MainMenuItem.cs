@@ -6,7 +6,7 @@ public class MainMenuItem : MonoBehaviour
 {
     [Header("Item Settings")]
     public string LevelName;
-    public float SelectionTime = 15f;
+    [Min(1f)] public float SelectionTime = 15f;
 
     [Header("Item Objects")]
     public RawImage BG;

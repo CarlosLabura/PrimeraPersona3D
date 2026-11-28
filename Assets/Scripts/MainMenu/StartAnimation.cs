@@ -12,12 +12,12 @@ public struct AnimatedImage
 public class StartAnimation : MonoBehaviour
 {
     [Header("Animation Settings")]
-    public float AnimationSpeed = 7.5f;
+    [Min(1f)] public float AnimationSpeed = 7.5f;
 
     [Header("Objects Needed")]
-    [SerializeField] private RawImage StartText;
-    [SerializeField] private RawImage BlackScreen;
-    [SerializeField] private AnimatedImage[] Images;
+    public RawImage StartText;
+    public RawImage BlackScreen;
+    public AnimatedImage[] Images;
 
     //Internal Variables
     public static StartAnimation Instance;
