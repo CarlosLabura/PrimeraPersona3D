@@ -47,9 +47,9 @@ public class VictoryCondition : MonoBehaviour
     }
     private void StartCount()
     {
-        Debug.Log("Starting Count");
         State = GameState.Counting;
         StarterAssetsInputs.Locked = true;
+        Debug.Log("Starting Count");
         StartCoroutine(Count());
     }
     private IEnumerator Count()
@@ -65,10 +65,10 @@ public class VictoryCondition : MonoBehaviour
     }
     private void CountFinished()
     {
-        Debug.Log("Counting finished");
         GameOver.SetText("");
         State = GameState.Active;
         StarterAssetsInputs.Locked = false;
+        Debug.Log("Counting finished");
     }
     private void PlayerWin()
     {

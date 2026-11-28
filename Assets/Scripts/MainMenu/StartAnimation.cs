@@ -37,10 +37,10 @@ public class StartAnimation : MonoBehaviour
     {
         if (!Started)
         {
-            Debug.Log("Started Menu");
             Started = true;
             StartText.color = new Color(1,1,1,0);
             BlackScreen.color = Color.white;
+            Debug.Log("Started Menu");
         }
     }
     private void Start()

@@ -82,9 +82,9 @@ public class MenuControl : MonoBehaviour
         {
             BlackScreen.color = Color.Lerp(BlackScreen.color, Color.black, Time.deltaTime * TransitionSpeed);
             if (BlackScreen.color.a >= 0.99){
-                Debug.Log("Loading into selected Scene");
                 Loaded = true;
                 GameData.CurrentLevel = Selected;
+                Debug.Log("Loading into selected Scene");
                 SceneManager.LoadScene(LevelPath+Selected+"/Scene");
             }
         }
