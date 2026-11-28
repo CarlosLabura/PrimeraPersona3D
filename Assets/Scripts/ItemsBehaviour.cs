@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
-public enum ItemType {SpeedCan}
+public enum ItemType {SpeedCan, SuperShot}
 public class ItemsBehaviour : MonoBehaviour
 {
     [Header("Item Data")]
     public ItemType Type = ItemType.SpeedCan;
+    public int Amount = 1;
     public float Duration = 3f;
 
     [Header("Item Animation")]
@@ -23,6 +24,9 @@ public class ItemsBehaviour : MonoBehaviour
         {
             case ItemType.SpeedCan:
                 Player.GetComponent<StarterAssets.FirstPersonController>().CanCollected(Duration);
+                break;
+            case ItemType.SuperShot:
+                Player.GetComponent<ShootingSystem>().SuperShots += Amount;
                 break;
             default:
                 break;

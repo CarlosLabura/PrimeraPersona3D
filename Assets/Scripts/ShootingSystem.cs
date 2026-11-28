@@ -11,6 +11,7 @@ public class ShootingSystem : MonoBehaviour
 
     [Header("Objects Needed")]
     public GameObject Projectile;
+    public GameObject Ray;
     public Transform SpawnPoint;
     [ShowIf(typeof(HealthSystem), "IsPlayer")] public Transform GunModel;
     [ShowIf(typeof(HealthSystem), "IsPlayer")] public Transform FastGunModel;
@@ -28,28 +29,32 @@ public class ShootingSystem : MonoBehaviour
         if (HealthSystem.IsPlayer)
             StarterAssetsInputs = GetComponent<StarterAssets.StarterAssetsInputs>();
     }
-    private void Start()
-    {
-
-    }
     public void OnShoot(InputValue value)
     {
         if (StarterAssetsInputs.Locked)
             return;
 
-        Shoot();
+        Shoot(SuperShots != 0);
     }
-    public void Shoot()
+    public void Shoot(bool Supershot = false)
     {
         if (DelayTimer > 0)
             return;
-
         DelayTimer = ShootingDelay;
 
-        GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
-        ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
-        Destroy(ProjectileObject, DestroyTime);
-        Debug.Log($"{name} shot Projectile from X: {ProjectileObject.transform.position.x} Y: {ProjectileObject.transform.position.y} Z: {ProjectileObject.transform.position.z}");
+        if (Supershot)
+        {
+            SuperShots--;
+            Ray.GetComponent<RayColor>().SetAlpha(1);
+            Debug.Log($"{name} shot Ray from X: {transform.position.x} Y: {transform.position.y} Z: {transform.position.z}");
+        } 
+        else 
+        {
+            GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
+            ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
+            Destroy(ProjectileObject, DestroyTime);
+            Debug.Log($"{name} shot Projectile from X: {ProjectileObject.transform.position.x} Y: {ProjectileObject.transform.position.y} Z: {ProjectileObject.transform.position.z}");
+        }
     }
     private void Update()
     {
@@ -59,6 +64,9 @@ public class ShootingSystem : MonoBehaviour
             if (!HealthSystem.IsPlayer)
                 Shoot();
         }
+
+        if (!HealthSystem.IsPlayer) //Below: Only for the player
+            return;
 
         GunModel.localPosition = Vector3.Lerp(GunModel.localPosition, (SuperShots > 0) ? Vector3.down * 10 : Vector3.zero, Time.deltaTime*AnimationTime);
         FastGunModel.localPosition = Vector3.Lerp(FastGunModel.localPosition, (SuperShots < 1) ? Vector3.up * 10 : Vector3.zero, Time.deltaTime*AnimationTime);

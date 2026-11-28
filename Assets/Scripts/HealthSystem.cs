@@ -9,6 +9,7 @@ public class HealthSystem : MonoBehaviour
     public int MaxHealth = 100;
     [ShowIf("IsPlayer")] public int EnemyDamage = 10;
     [ShowIf("IsPlayer")] public int ProjectileDamage = 20;
+    [ShowIf("IsPlayer")] public int RayDamage = 100;
     [ShowIf("IsPlayer", true)] public float EnemyDestroyTime = 3f;
 
     [Header("Objects Needed")]
@@ -65,10 +66,15 @@ public class HealthSystem : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Projectile"))
+        if (!IsPlayer && collision.gameObject.CompareTag("Projectile"))
             Damage(ProjectileDamage);
 
         if (IsPlayer && collision.gameObject.CompareTag("Enemy"))
             Damage(EnemyDamage);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (!IsPlayer && other.CompareTag("Ray") && other.GetComponent<RayColor>().GetAlpha() > 0.5)
+            Damage(RayDamage);
     }
 }
