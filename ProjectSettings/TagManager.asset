@@ -5,10 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
-  - Projectile
   - Enemy
   - Item
   - Ray
+  - Projectile
   layers:
   - Default
   - TransparentFX

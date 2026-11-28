@@ -122,7 +122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea632441661039146a21d50458f3451d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  Type: 0
   State: 0
+  DetectionRange: 10
+  LoseRange: 15
   Target: {fileID: 0}
   ModelAnimator: {fileID: 4093439998667950783}
 --- !u!114 &6033668733805081416
@@ -141,6 +144,7 @@ MonoBehaviour:
   MaxHealth: 100
   EnemyDamage: 10
   ProjectileDamage: 20
+  RayDamage: 100
   EnemyDestroyTime: 3
   HealthBar: {fileID: 772135076977439937}
   DamageBar: {fileID: 1779670293703661085}

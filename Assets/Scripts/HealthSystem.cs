@@ -66,7 +66,7 @@ public class HealthSystem : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (!IsPlayer && collision.gameObject.CompareTag("Projectile"))
+        if (collision.gameObject.CompareTag("Projectile"))
             Damage(ProjectileDamage);
 
         if (IsPlayer && collision.gameObject.CompareTag("Enemy"))

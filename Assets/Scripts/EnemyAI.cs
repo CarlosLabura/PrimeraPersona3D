@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
-public enum EnemyState { Patrol, Following }
+public enum EnemyType { Walker, Shooter, Flyer }
+public enum EnemyState { Patrol, Following, Dead }
 [RequireComponent(typeof(HealthSystem))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
+    public EnemyType Type = EnemyType.Walker;
     public EnemyState State;
 
     [Header("Enemy Sight")]
@@ -23,11 +25,15 @@ public class EnemyAI : MonoBehaviour
     // Needed Components
     private HealthSystem HealthSystem;
     private NavMeshAgent NavMeshAgent;
+    private ShootingSystem ShootingSystem;
 
     private void Awake()
     {
         HealthSystem = GetComponent<HealthSystem>();
         NavMeshAgent = GetComponent<NavMeshAgent>();
+
+        if (Type == EnemyType.Shooter)
+            ShootingSystem = GetComponent<ShootingSystem>();
     }
     //https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/doc/UNT0016.md
     private void Start()
@@ -45,38 +51,32 @@ public class EnemyAI : MonoBehaviour
             NavMeshAgent.speed = 0;
 
         ModelAnimator.SetFloat(SpeedAnim, NavMeshAgent.velocity.magnitude);
+
+        if (Type == EnemyType.Shooter && State == EnemyState.Following && !NavMeshAgent.pathPending && NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance)
+        {
+            transform.LookAt(new Vector3(Target.position.x, transform.position.y, Target.position.z));
+            ShootingSystem.Shoot();
+        }
     }
     private void UpdateStateMachine()
     {
         if (HealthSystem.IsDead || Target == null)
             return;
 
-        float sqrDistance = (Target.position - transform.position).sqrMagnitude;
+        float distance = Vector3.Distance(transform.position, Target.position);
         switch (State)
         {
             case EnemyState.Patrol:
-                if (sqrDistance <= DetectionRange * DetectionRange)
-                    ChangeState(EnemyState.Following);
+                if (distance <= DetectionRange)
+                    State = EnemyState.Following;
                 break;
-
             case EnemyState.Following:
-                if (sqrDistance > LoseRange * LoseRange)
-                    ChangeState(EnemyState.Patrol);
-                else
+                if (distance > LoseRange) {
+                    State = EnemyState.Patrol;
+                    NavMeshAgent.ResetPath();
+                } else {
                     NavMeshAgent.destination = Target.position;
-                break;
-        }
-    }
-    private void ChangeState(EnemyState newState)
-    {
-        State = newState;
-        switch (newState)
-        {
-            case EnemyState.Patrol:
-                NavMeshAgent.ResetPath();
-                break;
-            case EnemyState.Following:
-                NavMeshAgent.destination = Target.position;
+                }
                 break;
         }
     }
@@ -84,6 +84,7 @@ public class EnemyAI : MonoBehaviour
     {
         CancelInvoke(nameof(UpdateStateMachine));
         NavMeshAgent.ResetPath();
+        State = EnemyState.Dead;
         ModelAnimator.SetBool(DeadAnim, true);
         Debug.Log($"Playing {name} Death Animation");
     }

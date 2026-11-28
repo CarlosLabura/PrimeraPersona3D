@@ -6,12 +6,12 @@ public class ShootingSystem : MonoBehaviour
     public float ProjectileSpeed = 15f;
     public float ShootingDelay = 0.3f;
     public float DestroyTime = 3f;
-    public int SuperShots = 0;
-    public float AnimationTime = 15f;
+    [ShowIf(typeof(HealthSystem), "IsPlayer")] public int SuperShots = 0;
+    [ShowIf(typeof(HealthSystem), "IsPlayer")] public float AnimationTime = 15f;
 
     [Header("Objects Needed")]
     public GameObject Projectile;
-    public GameObject Ray;
+    [ShowIf(typeof(HealthSystem), "IsPlayer")] public GameObject Ray;
     public Transform SpawnPoint;
     [ShowIf(typeof(HealthSystem), "IsPlayer")] public Transform GunModel;
     [ShowIf(typeof(HealthSystem), "IsPlayer")] public Transform FastGunModel;
@@ -52,6 +52,10 @@ public class ShootingSystem : MonoBehaviour
         {
             GameObject ProjectileObject = Instantiate(Projectile, SpawnPoint.position, SpawnPoint.rotation);
             ProjectileObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0, ProjectileSpeed), ForceMode.Impulse);
+
+            if (!HealthSystem.IsPlayer)
+                ProjectileObject.GetComponent<Outline>().OutlineColor = Color.red;
+
             Destroy(ProjectileObject, DestroyTime);
             Debug.Log($"{name} shot Projectile from X: {ProjectileObject.transform.position.x} Y: {ProjectileObject.transform.position.y} Z: {ProjectileObject.transform.position.z}");
         }
@@ -60,10 +64,6 @@ public class ShootingSystem : MonoBehaviour
     {
         if (DelayTimer > 0) 
             DelayTimer -= Time.deltaTime;
-        else {
-            if (!HealthSystem.IsPlayer)
-                Shoot();
-        }
 
         if (!HealthSystem.IsPlayer) //Below: Only for the player
             return;

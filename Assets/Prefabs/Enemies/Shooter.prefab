@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7483380663807316866}
   - component: {fileID: 3633637690994099364}
   - component: {fileID: 6033668733805081416}
+  - component: {fileID: 8410794976863156781}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Enemy
@@ -36,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 3801261649282003447}
   - {fileID: 4733204959167022464}
+  - {fileID: 1220382193021287169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6413287850005522430
@@ -102,7 +104,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.1
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -122,9 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea632441661039146a21d50458f3451d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  Type: 1
   State: 0
-  DetectionRange: 10
-  LoseRange: 15
+  DetectionRange: 20
+  LoseRange: 30
   Target: {fileID: 0}
   ModelAnimator: {fileID: 1679723921088798714}
 --- !u!114 &6033668733805081416
@@ -144,12 +147,35 @@ MonoBehaviour:
   EnemyDamage: 10
   ProjectileDamage: 20
   RayDamage: 100
-  EnemyDestroyTime: 3
+  EnemyDestroyTime: 7
   HealthBar: {fileID: 772135076977439937}
   DamageBar: {fileID: 1779670293703661085}
   EnemyHealthCanvas: {fileID: 3801261649282003447}
   Health: 0
   IsDead: 0
+--- !u!114 &8410794976863156781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066839284563001124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28d85843e010e54c896e6b70021d0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShootingSystem
+  ProjectileSpeed: 10
+  ShootingDelay: 1.5
+  DestroyTime: 10
+  SuperShots: 0
+  AnimationTime: 15
+  Projectile: {fileID: 2318336674569544567, guid: 936dd5d0196aa4d4cacee99e20e52265, type: 3}
+  Ray: {fileID: 0}
+  SpawnPoint: {fileID: 1220382193021287169}
+  GunModel: {fileID: 0}
+  FastGunModel: {fileID: 0}
+  DelayTimer: 0
 --- !u!1 &1218181316162512352
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +505,37 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &6839484084603898118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220382193021287169}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1220382193021287169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6839484084603898118}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.309, y: 0, z: 0.744}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3404014281039409895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5054447979184382571
 PrefabInstance:
   m_ObjectHideFlags: 0

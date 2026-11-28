@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemsBehaviour
   Type: 0
+  Amount: 1
   Duration: 3
   AnimationSpeed: 0.0015
   Player: {fileID: 1176169341140571984, guid: 0433f6c58ac316545b91f72d3908a173, type: 3}
