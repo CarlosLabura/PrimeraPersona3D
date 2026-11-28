@@ -35,7 +35,6 @@ public class ItemsBehaviour : MonoBehaviour
         Debug.Log($"Player colleted {Type} at X: {transform.position.x} Y: {transform.position.y} Z: {transform.position.z}");
         Destroy(gameObject);
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Projectile"))
